@@ -1,0 +1,359 @@
+<% layout("/layouts/boilerplate") %>
+
+    <body>
+        <div class="container mt-4">
+            <div class="text-center mb-4">
+                <h3 class="fw-bold text-dark py-3 mb-3">
+                    <i class="fas fa-edit me-2" style="color: #fe424d;"></i>
+                    Edit Listing: <%= listing.title %>
+                </h3>
+                <p class="text-muted">Update your property details</p>
+            </div>
+
+            <div class="row">
+                <div class="col-8 offset-2">
+                    <form method="post" action="/listings/<%= listing.id %>?_method=PATCH"
+                        class="mb-4 needs-validation enhanced-form" novalidate enctype="multipart/form-data">
+
+                        <div class="mb-4">
+                            <label for="title" class="form-label fw-semibold">
+                                <i class="fas fa-heading me-2 text-secondary"></i>
+                                Title
+                            </label>
+                            <input type="text" class="form-control form-control-lg enhanced-input" id="title"
+                                name="title" value="<%= listing.title %>" placeholder="Enter your property title..."
+                                required>
+                            <div class="invalid-feedback">Please enter a title</div>
+                            <div class="valid-feedback">Title looks good!</div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="description" class="form-label fw-semibold">
+                                <i class="fas fa-align-left me-2 text-secondary"></i>
+                                Description
+                            </label>
+                            <textarea class="form-control form-control-lg enhanced-input" id="description"
+                                name="description" rows="4" placeholder="Describe your property..." required
+                                style="resize: vertical;"><%= listing.description %></textarea>
+                            <div class="invalid-feedback">Please enter a description</div>
+                            <div class="valid-feedback">Description looks good!</div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="categories" class="form-label fw-semibold">
+                                <i class="fas fa-tags me-2 text-secondary"></i>
+                                Categories
+                            </label>
+                            <select class="form-select form-select-lg enhanced-select" id="categories" name="categories"
+                                required>
+                                <option value="">Select a category</option>
+                                <option value="Trending" <%=listing.categories==='Trending' ? 'selected' : '' %>>🔥
+                                    Trending</option>
+                                <option value="Rooms" <%=listing.categories==='Rooms' ? 'selected' : '' %>>🏠 Rooms
+                                </option>
+                                <option value="Iconic City" <%=listing.categories==='Iconic City' ? 'selected' : '' %>
+                                    >🏙️ Iconic City</option>
+                                <option value="Mountains" <%=listing.categories==='Mountains' ? 'selected' : '' %>>⛰️
+                                    Mountains</option>
+                                <option value="Castles" <%=listing.categories==='Castles' ? 'selected' : '' %>>🏰
+                                    Castles</option>
+                                <option value="Amazing Pools" <%=listing.categories==='Amazing Pools' ? 'selected' : ''
+                                    %>>🏊 Amazing Pools</option>
+                                <option value="Camping" <%=listing.categories==='Camping' ? 'selected' : '' %>>⛺ Camping
+                                </option>
+                                <option value="Farms" <%=listing.categories==='Farms' ? 'selected' : '' %>>🚜 Farms
+                                </option>
+                                <option value="Arctic" <%=listing.categories==='Arctic' ? 'selected' : '' %>>❄️ Arctic
+                                </option>
+                                <option value="Boats" <%=listing.categories==='Boats' ? 'selected' : '' %>>⛵ Boats
+                                </option>
+                                <option value="Domes" <%=listing.categories==='Domes' ? 'selected' : '' %>>🏕️ Domes
+                                </option>
+                            </select>
+                            <div class="invalid-feedback">Please select a category</div>
+                            <div class="valid-feedback">Categories looks good!</div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="current-image" class="form-label fw-semibold">
+                                <i class="fas fa-image me-2 text-secondary"></i>
+                                Current Image
+                            </label>
+                            <div class="current-image-wrapper">
+                                <img src="<%= currentImage %>" alt="Current Property Image" class="current-image">
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="image" class="form-label fw-semibold">
+                                <i class="fas fa-camera me-2 text-secondary"></i>
+                                Upload New Image (Optional)
+                            </label>
+                            <input type="file" class="form-control form-control-lg enhanced-input" id="image"
+                                name="image" accept="image/*">
+                            <small class="form-text text-muted mt-2">
+                                <i class="fas fa-info-circle me-1"></i>
+                                Leave empty to keep current image
+                            </small>
+                            <div class="invalid-feedback">Please upload a valid image</div>
+                            <div class="valid-feedback">New image selected!</div>
+                        </div>
+
+                        <div class="row">
+                            <div class="mb-4 col-md-4">
+                                <label for="price" class="form-label fw-semibold">
+                                    <i class="fas fa-rupee-sign me-2 text-secondary"></i>
+                                    Price
+                                </label>
+                                <div class="input-group input-group-lg">
+                                    <span class="input-group-text enhanced-input-text">₹</span>
+                                    <input type="number" class="form-control enhanced-input" id="price" name="price"
+                                        value="<%= listing.price %>" placeholder="2500" min="1" required>
+                                </div>
+                                <div class="invalid-feedback">Please enter a price</div>
+                                <div class="valid-feedback">Price looks good!</div>
+                            </div>
+                            <div class="mb-4 col-md-8">
+                                <label for="location" class="form-label fw-semibold">
+                                    <i class="fas fa-map-marker-alt me-2 text-secondary"></i>
+                                    Location
+                                </label>
+                                <input type="text" class="form-control form-control-lg enhanced-input" id="location"
+                                    name="location" value="<%= listing.location %>" placeholder="City, State" required>
+                                <div class="invalid-feedback">Please enter a location</div>
+                                <div class="valid-feedback">Location looks good!</div>
+                            </div>
+                        </div>
+
+                        <div class="mb-5">
+                            <label for="country" class="form-label fw-semibold">
+                                <i class="fas fa-flag me-2 text-secondary"></i>
+                                Country
+                            </label>
+                            <input type="text" class="form-control form-control-lg enhanced-input" id="country"
+                                name="country" value="<%= listing.country %>" placeholder="India" required>
+                            <div class="invalid-feedback">Please enter a country name</div>
+                            <div class="valid-feedback">Country name looks good!</div>
+                        </div>
+
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-lg px-5 py-3 enhanced-submit-btn">
+                                <i class="fas fa-save me-2"></i>
+                                Update Listing
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enhanced Styling -->
+        <style>
+            .enhanced-form {
+                background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+                padding: 2.5rem;
+                border-radius: 15px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+            }
+
+            .enhanced-input,
+            .enhanced-select {
+                border: 2px solid #e9ecef;
+                border-radius: 10px;
+                transition: all 0.3s ease;
+                font-size: 1rem;
+                padding: 0.75rem 1rem;
+            }
+
+            .enhanced-input:focus,
+            .enhanced-select:focus {
+                border-color: #fe424d;
+                box-shadow: 0 0 0 3px rgba(254, 66, 77, 0.1);
+                transform: translateY(-1px);
+            }
+
+            .enhanced-input:hover,
+            .enhanced-select:hover {
+                border-color: #fe424d;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            }
+
+            .enhanced-input-text {
+                background: linear-gradient(135deg, #fe424d 0%, #ff6b8a 100%);
+                color: white;
+                border: 2px solid #fe424d;
+                border-right: none;
+                font-weight: 600;
+            }
+
+            .enhanced-input-text+.enhanced-input {
+                border-left: none;
+            }
+
+            .current-image-wrapper {
+                background: #f8f9fa;
+                border: 2px dashed #e9ecef;
+                border-radius: 10px;
+                padding: 20px;
+                text-align: center;
+                margin-bottom: 10px;
+            }
+
+            .current-image {
+                max-width: 100%;
+                max-height: 300px;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                transition: transform 0.3s ease;
+            }
+
+            .current-image:hover {
+                transform: scale(1.02);
+            }
+
+            .enhanced-submit-btn {
+                background: linear-gradient(135deg, #fe424d 0%, #ff6b8a 100%);
+                border: none;
+                color: white;
+                border-radius: 12px;
+                font-weight: 600;
+                transition: all 0.3s ease;
+                box-shadow: 0 6px 20px rgba(254, 66, 77, 0.3);
+            }
+
+            .enhanced-submit-btn:hover {
+                background: linear-gradient(135deg, #e6374b 0%, #ff5577 100%);
+                transform: translateY(-2px);
+                box-shadow: 0 8px 25px rgba(254, 66, 77, 0.4);
+                color: white;
+            }
+
+            .form-label {
+                color: #2c3e50;
+                margin-bottom: 0.5rem;
+            }
+
+            .form-label i {
+                color: #6c757d;
+            }
+
+            .text-center h3 {
+                position: relative;
+            }
+
+            .text-center h3::after {
+                content: '';
+                position: absolute;
+                bottom: -10px;
+                left: 50%;
+                width: 80px;
+                height: 3px;
+                background: linear-gradient(90deg, #fe424d 0%, #ff6b8a 100%);
+                transform: translateX(-50%);
+                border-radius: 2px;
+            }
+
+            /* Fixed validation feedback - only show when form is validated */
+            .invalid-feedback,
+            .valid-feedback {
+                display: none;
+                width: 100%;
+                margin-top: 0.25rem;
+                font-size: 0.875rem;
+            }
+
+            .invalid-feedback {
+                color: #dc3545;
+            }
+
+            .valid-feedback {
+                color: #198754;
+            }
+
+            .was-validated .form-control:valid~.valid-feedback,
+            .was-validated .form-select:valid~.valid-feedback,
+            .form-control.is-valid~.valid-feedback,
+            .form-select.is-valid~.valid-feedback {
+                display: block;
+            }
+
+            .was-validated .form-control:invalid~.invalid-feedback,
+            .was-validated .form-select:invalid~.invalid-feedback,
+            .form-control.is-invalid~.invalid-feedback,
+            .form-select.is-invalid~.invalid-feedback {
+                display: block;
+            }
+
+            .form-control.is-valid,
+            .form-select.is-valid {
+                border-color: #198754;
+                box-shadow: 0 0 0 3px rgba(25, 135, 84, 0.1);
+            }
+
+            .form-control.is-invalid,
+            .form-select.is-invalid {
+                border-color: #dc3545;
+                box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
+            }
+
+            @media (max-width: 768px) {
+                .enhanced-form {
+                    padding: 1.5rem;
+                }
+
+                .current-image {
+                    max-height: 200px;
+                }
+            }
+        </style>
+
+        <!-- Enhanced JavaScript -->
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const form = document.querySelector('.needs-validation');
+                const fileInput = document.getElementById('image');
+
+                // Form validation
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                });
+
+                // File input feedback
+                fileInput.addEventListener('change', function (e) {
+                    if (e.target.files.length > 0) {
+                        this.classList.add('is-valid');
+                        this.classList.remove('is-invalid');
+                    } else {
+                        this.classList.remove('is-valid');
+                        this.classList.remove('is-invalid');
+                    }
+                });
+
+                // Real-time validation feedback
+                const inputs = form.querySelectorAll('input, textarea, select');
+                inputs.forEach(input => {
+                    input.addEventListener('blur', function () {
+                        if (this.checkValidity()) {
+                            this.classList.remove('is-invalid');
+                            this.classList.add('is-valid');
+                        } else {
+                            this.classList.remove('is-valid');
+                            this.classList.add('is-invalid');
+                        }
+                    });
+                });
+            });
+        </script>
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+            crossorigin="anonymous"></script>
+    </body>

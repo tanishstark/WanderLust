@@ -1,0 +1,183 @@
+<% layout("/layouts/boilerplate") %>
+
+    <style>
+        #filters {
+            display: flex;
+            flex-wrap: wrap;
+
+        }
+
+        .filter {
+            text-align: center;
+            margin-top: 2rem;
+            margin-right: 3rem;
+
+            opacity: 0.7;
+            color: black;
+        }
+
+        .filter:hover {
+            opacity: 1;
+            cursor: pointer;
+        }
+
+        .fa-solid {
+            font-size: medium;
+        }
+
+        .filter,
+        a,
+        p {
+            font-size: 0.8rem;
+            color: black;
+            text-decoration: none;
+        }
+
+        .TAX-INFO {
+            display: none;
+            color: #fe424d;
+        }
+
+        .tax-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            margin-left: auto;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            padding: 0.5rem 2rem;
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 2rem;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+            font-size: 1rem;
+            transition: background 0.2s;
+        }
+
+        .tax-toggle:hover {
+            background: #e9ecef;
+        }
+
+        .tax-toggle .form-switch {
+            margin-bottom: 0;
+        }
+    </style>
+
+
+    <body>
+        <div id="filters">
+            <div class="filter">
+                <a href="/listings?category=Trending">
+                    <div><i class="fa-solid fa-fire"></i></div>
+                    <p>Trending</p>
+                </a>
+
+            </div>
+            <div class="filter">
+                <a href="/listings?category=Rooms">
+                    <div><i class="fa-solid fa-bed"></i></div>
+                    <p>Rooms</p>
+                </a>
+            </div>
+            <div class="filter">
+                <a href="/listings?category=Iconic City">
+                    <div><i class="fa-solid fa-mountain-city"></i></div>
+                    <p>Iconic City</p>
+                </a>
+            </div>
+            <div class="filter">
+                <a href="/listings?category=Mountains">
+                    <div><i class="fa-solid fa-cable-car"></i></div>
+                    <p>Mountains</p>
+                </a>
+            </div>
+            <div class="filter">
+                <a href="/listings?category=Castles">
+                    <div><i class="fa-solid fa-chess-rook"></i></div>
+                    <p>Castles</p>
+            </div>
+            <div class="filter">
+                <a href="/listings?category=Amazing Pools">
+                    <div><i class="fa-solid fa-person-swimming"></i></div>
+                    <p>Amazing Pools</p>
+                </a>
+            </div>
+            <div class="filter">
+                <a href="/listings?category=Camping">
+                    <div><i class="fa-solid fa-tree"></i></div>
+                    <p>Camping</p>
+                </a>
+            </div>
+            <div class="filter">
+                <a href="/listings?category=Farms">
+                    <div><i class="fa-solid fa-cow"></i></div>
+                    <p>Farms</p>
+                </a>
+            </div>
+            <div class="filter">
+                <a href="/listings?category=Arctic">
+                    <div><i class="fa-solid fa-snowflake"></i></div>
+                    <p>Arctic</p>
+                </a>
+            </div>
+            <div class="filter">
+                <a href="/listings?category=Arctic">
+                    <div><i class="fa-solid fa-ship"></i></div>
+                    <p>Boats</p>
+                </a>
+            </div>
+            <div class="filter">
+                <a href="/listings?category=Arctic">
+                    <div><i class="fa-solid fa-igloo"></i></div>
+                    <p>Domes</p>
+                </a>
+            </div>
+            <div class="tax-toggle">
+                <div class="form-check-reverse form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
+                    <label class="form-check-label" for="switchCheckDefault">Display Tax</label>
+                </div>
+            </div>
+
+
+        </div>
+        <!-- Cards Container -->
+        <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
+            <% for(let listings of allListings) { %>
+                <a class="listings-links" href="/listings/<%= listings._id %>">
+                    <div class="card col listing-card">
+                        <img src="<%= listings.image.url %>" class="card-img-top" alt="<%= listings.title %>">
+                        <div class="card-img-overlay"> </div>
+                        <div class="card-body">
+                            <p class="card-text">
+                                <b>
+                                    <%= listings.title %>
+                                </b>
+                                <br>
+                                &#8377 <%= typeof listings.price==='number' ? listings.price.toLocaleString("en-IN")
+                                    : 'Price not set' %> /night
+                                    <i class="TAX-INFO">&nbsp; &nbsp; +18 GST</i>
+                            </p>
+                            </p>
+
+                        </div>
+                    </div>
+                </a>
+                <% } %>
+        </div>
+        <script>
+            let taxToggle = document.getElementById('switchCheckDefault');
+            taxToggle.addEventListener('click', () => {
+                let taxSwitch = document.getElementsByClassName("TAX-INFO")
+                for (taxInfo of taxSwitch) {
+                    if (taxInfo.style.display !== "inline") {
+                        taxInfo.style.display = "inline"
+                    } else {
+                        taxInfo.style.display = "none"
+                    }
+                }
+            });
+        </script>
+
+
+    </body>
