@@ -1,33 +1,154 @@
 <% layout("/layouts/boilerplate") %>
 
-    <div class="container mt-4">
-        <h3 class="text-center py-1">
-            Sign Up to Wanderlust
-        </h3>
-        <div class="row">
-            <div class="col-8 offset-2">
-                <form method="post" action="/signup" class="mb-4 needs-validation" novalidate>
-                    <div class="mb-3">
-                        <label for="username" class="form-label">User Name</label>
-                        <input type="text" class="form-control" id="username" name="username" required>
-                        <div class="invalid-feedback">Please enter a user name</div>
-                        <div class="valid-feedback">User name looks good!</div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
-                        <div class="invalid-feedback">Please enter a valid email</div>
-                        <div class="valid-feedback">Email looks good!</div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" required>
-                        <div class="invalid-feedback">Please enter a password</div>
-                        <div class="valid-feedback">Password looks good!</div>
+    <div class="container-fluid py-5" style="background-color: white; min-height: 100vh;">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="py-4">
+                    <!-- Header with icon -->
+                    <div class="text-center mb-4">
+                        <div class="mb-3">
+                            <i class="fas fa-user-plus text-danger" style="font-size: 3rem;"></i>
+                        </div>
+                        <h3 class="fw-bold text-dark mb-2">Join Wanderlust</h3>
+                        <p class="text-muted small">Create your account to get started</p>
                     </div>
 
-                    <button type="submit" class="add-btn">Sign Up</button>
-                </form>
+                    <form method="post" action="/signup" class="needs-validation" novalidate>
+                        <!-- Username Field -->
+                        <div class="mb-4">
+                            <label for="username" class="form-label text-dark fw-medium">
+                                <i class="fas fa-user me-2 text-muted"></i>Username
+                            </label>
+                            <input type="text" class="form-control form-control-lg border-0 shadow-sm" id="username"
+                                name="username" placeholder="Enter your username"
+                                style="background-color: #f8f9fa; border-radius: 12px;" required>
+                            <div class="invalid-feedback">
+                                <i class="fas fa-exclamation-circle me-1"></i>
+                                Please enter a username
+                            </div>
+                            <div class="valid-feedback">
+                                <i class="fas fa-check-circle me-1"></i>
+                                Username looks good!
+                            </div>
+                        </div>
+
+                        <!-- Email Field -->
+                        <div class="mb-4">
+                            <label for="email" class="form-label text-dark fw-medium">
+                                <i class="fas fa-envelope me-2 text-muted"></i>Email
+                            </label>
+                            <input type="email" class="form-control form-control-lg border-0 shadow-sm" id="email"
+                                name="email" placeholder="Enter your email"
+                                style="background-color: #f8f9fa; border-radius: 12px;" required>
+                            <div class="invalid-feedback">
+                                <i class="fas fa-exclamation-circle me-1"></i>
+                                Please enter a valid email
+                            </div>
+                            <div class="valid-feedback">
+                                <i class="fas fa-check-circle me-1"></i>
+                                Email looks good!
+                            </div>
+                        </div>
+
+                        <!-- Password Field -->
+                        <div class="mb-4">
+                            <label for="password" class="form-label text-dark fw-medium">
+                                <i class="fas fa-lock me-2 text-muted"></i>Password
+                            </label>
+                            <div class="position-relative">
+                                <input type="password" class="form-control form-control-lg border-0 shadow-sm"
+                                    id="password" name="password" placeholder="Enter your password"
+                                    style="background-color: #f8f9fa; border-radius: 12px; padding-right: 45px;"
+                                    required>
+                                <button type="button"
+                                    class="btn position-absolute top-50 end-0 translate-middle-y me-3 p-0 border-0 bg-transparent"
+                                    onclick="togglePassword()">
+                                    <i class="fas fa-eye text-muted" id="toggleIcon"></i>
+                                </button>
+                            </div>
+                            <div class="invalid-feedback">
+                                <i class="fas fa-exclamation-circle me-1"></i>
+                                Please enter a password
+                            </div>
+                            <div class="valid-feedback">
+                                <i class="fas fa-check-circle me-1"></i>
+                                Password looks good!
+                            </div>
+                        </div>
+
+                        <!-- Sign Up Button -->
+                        <button type="submit" class="btn btn-lg w-100 text-white fw-bold shadow-sm mb-4"
+                            style="background: linear-gradient(135deg, #dc3545, #c82333); border: none; border-radius: 12px; padding: 12px;">
+                            <i class="fas fa-user-plus me-2"></i>
+                            Sign Up
+                        </button>
+
+                        <!-- Sign In Link -->
+                        <div class="text-center">
+                            <p class="text-muted small mb-0">
+                                Already have an account?
+                                <a href="/login" class="text-decoration-none text-danger fw-medium">Sign in</a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
+
+    <!-- Add custom styles -->
+    <style>
+        body {
+            background-color: white !important;
+        }
+
+        .form-control:focus {
+            box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.15);
+            border-color: #dc3545;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            transition: all 0.2s ease;
+        }
+
+        .form-control::placeholder {
+            color: #9ca3af;
+            font-size: 0.95rem;
+        }
+    </style>
+
+    <!-- Add JavaScript for password toggle -->
+    <script>
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.getElementById('toggleIcon');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        }
+
+        // Form validation
+        (function () {
+            'use strict';
+            window.addEventListener('load', function () {
+                var forms = document.getElementsByClassName('needs-validation');
+                var validation = Array.prototype.filter.call(forms, function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+    </script>
